@@ -1,198 +1,146 @@
-{\rtf1\ansi\ansicpg1252\cocoartf1671
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 CourierNewPS-ItalicMT;\f2\fmodern\fcharset0 CourierNewPSMT;
-\f3\froman\fcharset0 TimesNewRomanPSMT;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red5\green99\blue193;}
-{\*\expandedcolortbl;;\csgenericrgb\c0\c0\c0;\csgenericrgb\c1961\c38824\c75686;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
-\deftab720
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
+GRUPPO 09: PROGETTO TRAFFIC MONITOR 
 
-\f0\fs24 \cf0 \
-GRUPPO 09: PROGETTO TRAFFIC MONITOR \
-\
-ORDINE DI ESECUZIONE:\
-1. Avviare server usando XAMPP\
-2. Avviare Sistema Centrale e Centralina/e\
-3. Avviare Applicazione Mobile\
-\
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-\cf0 GARANZIA FUNZIONAMENTO:\
-\pard\pardeftab708\ri-952\qj\partightenfactor0
-\cf0 Il funzionamento del RMI \'e8 garantito con la connessione ad internet spenta. \
-Dato che alcune configurazioni di sicurezza del firewall dei router possono bloccare la comunicazione del RMI.\
-Infine il funzionamento dipende dal database che deve essere configurato come segue\
-\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-\cf0 \
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-\cf0 CONFIGURAZIONE DATABASE:\
-\pard\pardeftab720\pardirnatural\qj\partightenfactor0
-\cf2 - Download XAMPP: {\field{\*\fldinst{HYPERLINK "https://www.apachefriends.org/it/download.html"}}{\fldrslt \cf3 \ul \ulc3 https://www.apachefriends.org/it/download.html}}\cf3 \
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-\cf0 - Avvio server: Manage Servers > Start All\
-- Configurazione: Welcome > Go to Application\
-\
-Si aprir\'e0 Safari e andare su phpmyadmin\
-E nella console SQL incollare le seguenti query:\
-\
-\pard\pardeftab720\pardirnatural\partightenfactor0
+ORDINE DI ESECUZIONE:
+1. Avviare server usando XAMPP
+2. Avviare Sistema Centrale e Centralina/e
+3. Avviare Applicazione Mobile
 
-\f1\i\fs20 \cf0 GRANT ALL PRIVILEGES ON *.* TO 'gruppo09'@'localhost' IDENTIFIED BY 'gruppo09';
-\f2\i0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
+GARANZIA FUNZIONAMENTO:
+Il funzionamento del RMI \'e8 garantito con la connessione ad internet spenta. 
+Dato che alcune configurazioni di sicurezza del firewall dei router possono bloccare la comunicazione del RMI.
+Infine il funzionamento dipende dal database che deve essere configurato come segue
+CONFIGURAZIONE DATABASE:
+Download XAMPP:
+- Avvio server: Manage Servers > Start All
+- Configurazione: Welcome > Go to Application
 
-\f3\fs24 \cf0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
+Si aprire Safari e andare su phpmyadmin
+E nella console SQL incollare le seguenti query:
 
-\f1\i\fs20 \cf0 CREATE DATABASE gruppo09 
-\f2\i0 DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;\
-USE gruppo09;\
-\pard\pardeftab720\pardirnatural\partightenfactor0
+CREATE DATABASE gruppo09 
+DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+USE gruppo09;
 
-\f3\fs24 \cf0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
+CREATE TABLE utenti ( id smallint unsigned not null auto_increment, username varchar(20) not null unique, password varchar(32) not null, 
+via varchar(64) not null,
+constraint chiave_primaria primary key (id) );
 
-\f1\i\fs20 \cf0 CREATE TABLE utenti ( id smallint unsigned not null auto_increment, username varchar(20) not null unique, password varchar(32) not null, 
-\f2\i0 via varchar(64) not null,
-\f1\i  constraint chiave_primaria primary key (id) );
-\f2\i0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
+CREATE TABLE vie ( via varchar(64) not null unique, limite tinyint unsigned not null, constraint chiave_primaria primary key (via) );
 
-\f3\fs24 \cf0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
+CREATE TABLE statitraffico (via varchar(64) not null unique, stato smallint unsigned not null, correttezza tinyint unsigned not null, orario datetime, constraint chiave_primaria primary key (via) );
 
-\f2\fs20 \cf0 CREATE TABLE vie ( via varchar(64) not null unique, limite tinyint unsigned not null, constraint chiave_primaria primary key (via) );\
-\pard\pardeftab720\pardirnatural\partightenfactor0
-
-\f3\fs24 \cf0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
-
-\f2\fs20 \cf0 CREATE TABLE statitraffico (via varchar(64) not null unique, stato smallint unsigned not null, correttezza tinyint unsigned not null, orario datetime, constraint chiave_primaria primary key (via) );\
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-
-\f0\fs24 \cf0 \
-\pard\pardeftab720\pardirnatural\partightenfactor0
-
-\f2\fs20 \cf0 INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('08 Via Amoretti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Anzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Appiani', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Appiani', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Aprica', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Aprica', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Aprica', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Aprica', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Balestra', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Barone', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Barone', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Barone', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Barone', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Bassetti', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Cadorna', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Calvi', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Calvi', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('08 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('09 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('10 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('11 Via Caprani', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Cavour', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ciceri', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ciceri', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ciceri', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Dotti', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Duomo', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Durini', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Einaudi', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Einaudi', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ferrari', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ferrari', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Fiori', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Fiori', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Fiori', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Fiori', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Foscolo', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Gaggi', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Gallio', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Geno', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Geno', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Geno', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Giovio', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Imbonati', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Lazzago', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Leoni', 80);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Luini', 90);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Magistri', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Magistri', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Magistri', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Magistri', 70);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Magni', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Milano', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Milano', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Moro', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Napoleona', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Napoleona', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Natta', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Naviigo', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Naviigo', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Naviigo', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Naviigo', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Naviigo', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ortelli', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ortelli', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ortelli', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ovidio', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ovidio', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ovidio', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Ovidio', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Pascoli', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Pederzani', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Quasimodo', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Raimondi', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Regina', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Rho', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Rho', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Sagnino', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Sagnino', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Sagnino', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Sagnino', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Tatti', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Tatti', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Tatti', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Trento', 40);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Urbano', 60);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Vacchi', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Valleggio', 50);\
-INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Valleggio', 50);\
-\pard\pardeftab720\pardirnatural\qj\partightenfactor0
-\cf0 INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Valleggio', 50);\
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-
-\f0\fs24 \cf0 \
-\pard\pardeftab708\ri-952\qj\partightenfactor0
-\cf0 \
-\pard\tx567\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardeftab720\pardirnatural\partightenfactor0
-\cf0 \
-}
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('08 Via Amoretti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Anzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Appiani', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Appiani', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Aprica', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Aprica', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Aprica', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Aprica', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Balestra', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Barone', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Barone', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Barone', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Barone', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Bassetti', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Cadorna', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Calvi', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Calvi', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('08 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('09 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('10 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('11 Via Caprani', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Cavour', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ciceri', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ciceri', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ciceri', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('06 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('07 Via Dotti', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Duomo', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Durini', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Einaudi', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Einaudi', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ferrari', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ferrari', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Fiori', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Fiori', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Fiori', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Fiori', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Foscolo', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Gaggi', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Gallio', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Geno', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Geno', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Geno', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Giovio', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Imbonati', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Lazzago', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Leoni', 80);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Luini', 90);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Magistri', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Magistri', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Magistri', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Magistri', 70);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Magni', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Milano', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Milano', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Moro', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Napoleona', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Napoleona', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Natta', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Naviigo', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Naviigo', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Naviigo', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Naviigo', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('05 Via Naviigo', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ortelli', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ortelli', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ortelli', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Ovidio', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Ovidio', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Ovidio', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Ovidio', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Pascoli', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Pederzani', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Quasimodo', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Raimondi', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Regina', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Rho', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Rho', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Sagnino', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Sagnino', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Sagnino', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('04 Via Sagnino', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Tatti', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Tatti', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Tatti', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Trento', 40);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Urbano', 60);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Vacchi', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('01 Via Valleggio', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('02 Via Valleggio', 50);
+INSERT INTO gruppo09.vie(via ,limite ) VALUES ('03 Via Valleggio', 50);
