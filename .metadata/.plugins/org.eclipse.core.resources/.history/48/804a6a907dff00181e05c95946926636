@@ -1,0 +1,196 @@
+package AppUtente;
+
+import java.awt.Color;
+
+import javax.swing.JOptionPane;
+
+import AppSistema.GestoreNotificheApp;
+import AppSistema.Notifica;
+import AppSistema.Segnalazione;
+import Common.Traffico;
+import MainPackage.MainGUI;
+
+public class GestoreInterfaccia implements IGestoreInterfaccia {
+	
+	private String posizione;
+	private Utente utente;
+	private Segnalazione segnalazione;
+	private ApplicazioneDataManager appManager;
+	private GestoreNotificheApp gNotifiche;
+	private MainGUI gui;
+	
+	public GestoreInterfaccia() {
+		this.posizione =  "";
+		this.utente = new Utente();
+		this.segnalazione = new Segnalazione();
+	}
+	
+	public GestoreInterfaccia(String posizione, Utente u) {
+		setPosizione(posizione);
+		this.utente = new Utente();
+		setUtente(u.getUsername(), u.getPassword());
+		this.segnalazione = new Segnalazione();
+	}
+	
+	public void setPosizione(String posizione) {
+		this.posizione = posizione;
+		setLabelPosizione();
+	}
+	
+	public void setUtente(String u, String p) {
+		this.utente.setUsername(u);
+		this.utente.setPassword(p);
+		
+	}
+	
+	public void setAppManager(ApplicazioneDataManager adm) {
+		this.appManager = adm;
+	}
+	
+	public void setGNotifiche(GestoreNotificheApp gn) {
+		this.gNotifiche = gn;
+	}
+	
+	public void setGUI(MainGUI gui) {
+		this.gui = gui;
+	}
+	
+	public String getPosizione() { return this.posizione; }
+	
+	public Utente getUtente() { return this.utente; }
+	
+	public Segnalazione getSegnalazione() { return this.segnalazione; } 
+	
+	public ApplicazioneDataManager getAppManager() { return this.appManager; }
+	
+	public GestoreNotificheApp getGNotifiche() { return this.gNotifiche; }
+	
+	public MainGUI getGUI() { return this.gui; }
+	
+	public void mostraFormAutenticazione() {
+		getGUI().getPanelAutenticazione().setVisible(true);
+		getGUI().getPanelPaginaPrincipale().setVisible(false);
+	}
+	
+	public void mostraPaginaPrincipale() {
+		getGUI().getPanelPaginaPrincipale().setVisible(true);
+		getGUI().getPanelAutenticazione().setVisible(false);
+		getGUI().getPanelSegnalazione().setVisible(true);
+	}
+	
+	public void mostraFormSegnalazione() {
+		Color grigio = Color.decode("#2A282D");
+		Color rosso = Color.decode("#DB514C");
+		getGUI().getPanelListaNotifiche().setVisible(false);
+		getGUI().getPanelSegnalazione().setVisible(true);
+		getGUI().getBtnSegnalazione().setBackground(grigio);
+		getGUI().getBtnListaNotifiche().setBackground(rosso);
+	}
+	
+	public void mostraListaNotifiche() {
+		Color grigio = Color.decode("#2A282D");
+		Color rosso = Color.decode("#DB514C");
+		getGUI().getPanelSegnalazione().setVisible(false);
+		//getGUI().getPanelListaNotifiche().setVisible(true);
+		getGUI().getBtnSegnalazione().setBackground(rosso);
+		getGUI().getBtnListaNotifiche().setBackground(grigio);
+
+	}
+	
+	public void acceso() {
+		//sono vivo
+		
+	}
+	
+	public void posizioneCambiata(String via) {
+		//salvo l'ultima posizione nel db
+		JOptionPane.showMessageDialog(null, getUtente().getUsername() + " " + via);
+		if (appManager.setUltimaPosizione(getUtente(), via)) {
+			setPosizione(via);
+			getGNotifiche().rilevaNotifiche(); //cerca se vi sono notifiche riguardanti la nuova via e quelle adiacenti
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "ERRORE DB: Impossibile modificare la posizione");
+		}
+		
+	}
+	
+	//implementazione metodi dell'interfaccia
+	public void accedi(String username, String password) {
+		
+		//CONDIZIONI PER I CAMPI INSERITI DALL'UTENTE
+		if(username.equals("") || password.equals("")) {
+			JOptionPane.showMessageDialog(null, "Si prega di compilare tutti i campi");
+		}
+		if (username.trim().length() == 0 || password.trim().length() == 0) {
+			JOptionPane.showMessageDialog(null, "Si prega di non inserire spazi");
+		}
+
+		//LOGICA AUTENTICAZIONE
+		if( getAppManager().isUtenteRegistrato(username) ) {
+			
+			if ( getAppManager().autenticaUtente(username, password) ) {
+				setUtente(username, password);
+				setPosizione(getAppManager().getUltimaPosizione(getUtente()));
+				mostraPaginaPrincipale();
+			} 
+			else {
+				JOptionPane.showMessageDialog(null, "Password errata");
+			}
+		}
+		else {
+			if( getAppManager().registraUtente(username, password) ) {
+				setUtente(username, password);
+				setPosizione(getAppManager().getUltimaPosizione(getUtente()));
+				JOptionPane.showMessageDialog(null, "Ti sei registrato con successo");
+				mostraPaginaPrincipale();
+				
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "Errore nella registrazione");
+			}
+		}
+		
+	}
+	
+	public void segnalaTraffico(Traffico t) {
+		getSegnalazione().notify(t, getPosizione(), 1);
+		System.out.println(t); 
+	}
+	
+	public void nascondiNotifica() {
+		getGUI().getPanelNotifica().setVisible(false);
+		getGUI().getPanelHeader().setVisible(true);
+	}
+	
+//	public void nascondiNotifiche() {
+//		
+//	}
+
+	public void aggiungiNotificaPush(Notifica n) {
+		getGUI().getPanelHeader().setVisible(false);
+		getGUI().getPanelNotifica().setVisible(true);
+		getGUI().getNotificaTraffico().setText("Traffico: " + n.getTesto());
+		getGUI().getNotificaVia().setText("In: " + n.getPosizione().substring(3)); //substring 3 perché i primi 3 caratteri della via contengono il segmento stradale (utilizzato per il calcolo delle vie adiacenti)
+	
+	}
+	
+//	public void aggiungiNotificaPush() {
+//		getGUI().getNotificaTraffico().setText("TEST");
+//		getGUI().getNotificaVia().setText("TEST"); //substring 3 perché i primi 3 caratteri della via contengono il segmento stradale (utilizzato per il calcolo delle vie adiacenti)
+//	
+//	}
+	
+	public void setLabelPosizione() {
+		if (! getPosizione().isEmpty()) {
+			System.out.println(getPosizione()); 
+			getGUI().getLabelPosizione().setText("Sei in: " + getPosizione().substring(3));
+		}
+		else {
+			getGUI().getLabelPosizione().setText("Accendi il gps, selezionando una via");
+		}
+	}
+	
+	
+}
+

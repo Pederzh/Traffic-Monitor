@@ -1,0 +1,22 @@
+package Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import AppUtente.ApplicazioneDataManager;
+
+class isUtenteRegistratoTest {
+
+	@Test
+	public void testIsUtenteRegistrato() {
+		
+		ApplicazioneDataManager tester = new ApplicazioneDataManager();
+		
+		if(tester.isUtenteRegistrato("test")) {
+			//inserisco l'utente di test
+			tester.registraUtente("test", "test");
+		}
+	}
+
+}

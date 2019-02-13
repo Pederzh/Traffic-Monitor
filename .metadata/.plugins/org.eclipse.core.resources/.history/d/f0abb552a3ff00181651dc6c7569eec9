@@ -1,0 +1,109 @@
+package AppSistema;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import AppUtente.GestoreInterfaccia;
+import GestoriTraffico.IRmiGestoreNotifiche;
+import MainPackage.MainGUI;
+
+public class GestoreNotificheApp extends UnicastRemoteObject implements IRmiApplicazione {
+	
+	private static final long serialVersionUID = 7787401541047824619L;
+	
+	private GestoreInterfaccia gInterfaccia;
+	private IRmiGestoreNotifiche server;
+	//TODO private IRmiGestoreClient clientManager;
+	private ArrayList<Notifica> arrayNotifiche;
+	private MainGUI gui;
+	
+	public GestoreNotificheApp() throws RemoteException {
+		//TODO this.server = new IRmiGestoreNotifiche();
+		//TODO this.clientManager = new IRmiGestoreClient();
+		super();
+		this.arrayNotifiche = new ArrayList<Notifica>();
+	}
+	
+	public void setGInterfaccia(GestoreInterfaccia gi) {
+		this.gInterfaccia = gi;
+	}
+	
+	public void setServer(IRmiGestoreNotifiche s) {
+		this.server=s;
+	}
+	
+	public IRmiGestoreNotifiche getServer(){
+		return this.server;
+	}
+	
+	public void setClientManager() {
+		
+	}
+	
+	public void setGUI(MainGUI gui) {
+		this.gui = gui;
+	}
+	
+	public GestoreInterfaccia getGInterfaccia() { return this.gInterfaccia; }
+	
+	public MainGUI getGUI() { return this.gui; }
+	
+	//TODO public IRmiGestoreNotifiche getServer() { return this.server; }
+	
+	
+	//TODO public IRmiGestoreClient getClientManager() { return this.clientManager; }
+	
+	public ArrayList<Notifica> getNotifiche() { return this.arrayNotifiche; }
+	
+	//implementazione dell'interfaccia
+	public void addNotifica(Notifica n) throws RemoteException{
+		//riceve dal sistema centrale (chiamato dal suo rmi)
+		this.arrayNotifiche.add(n);
+		
+	}
+	
+	public void ciao() throws RemoteException
+	{
+		System.out.println("Ciao, sono il server");
+	}
+	
+	public void eliminaNotifica(int id) {
+		this.arrayNotifiche.remove(id);
+	}
+	
+	public void eliminaNotifiche() {
+		this.arrayNotifiche.clear();
+	}
+	
+	public void mostraNotifiche() {
+		
+	}
+	
+	public void rilevaNotifiche(String via){
+		//quando cambia la posizione chiama l'rmi del sist centrale
+		
+		ArrayList<Notifica> tmp = new ArrayList<Notifica>(); //TODO nelle tonde mettere la funzione che ritorna l'arraylist
+		try {
+			tmp = this.server.rilevaNotifiche(via, "io", 200);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/*
+		for (GestoriTraffico.Notifica el : tmp  ) {
+			getNotifiche().add(new Notifica(el.getPosizione(), el.getTesto()));
+		}*/
+		getNotifiche().addAll(tmp); //aggiunge all'array notifiche quelle nuove
+		
+	}
+	
+	public void registraClient(String posizione) {
+		
+	}
+	
+//	public Notifica getNotifica() {
+//		
+//	}
+	
+	}

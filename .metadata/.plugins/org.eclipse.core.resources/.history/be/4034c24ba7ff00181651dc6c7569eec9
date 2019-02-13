@@ -1,0 +1,35 @@
+package AppSistema;
+
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+
+public class Notifica extends UnicastRemoteObject {
+	private String posizione;
+	private String testo;
+	
+	private static final long serialVersionUID = 7787401541047824619L;
+	
+	
+	public Notifica() throws RemoteException {
+		setPosizione("");
+		setPosizione("");
+	}
+	
+	public Notifica(String posizione, String testo) throws RemoteException{
+		setPosizione(posizione);
+		setPosizione(testo);
+		
+	}
+	
+	public void setPosizione(String posizione) {
+		this.posizione = posizione;
+	}
+	
+	public void setTesto(String testo) {
+		this.testo = testo;
+	}
+	
+	public String getPosizione() { return this.posizione; }
+	
+	public String getTesto() { return this.testo; }
+}

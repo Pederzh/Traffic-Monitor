@@ -1,0 +1,17 @@
+package Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.JUnitCore;
+import org.junit.runners.JUnit4;
+
+class autenticaUtenteTest {
+
+	@Test
+	public void testAutenticaUtente() {
+		ApplicazioneDataManager tester = new ApplicazioneDataManager()
+		boolean r = test.autenticaUtente("test", "test");
+		
+	}
+}

@@ -1,0 +1,190 @@
+package MainPackage;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
+//import GestoriInterfaccia.*;
+import DatiTraffico.*;
+import GestoriDataBase.*;
+import GestoriTraffico.*;
+
+public class Main {
+
+	public static void main(String[] args) throws RemoteException {
+		
+		Timestamp t1 = new Timestamp (System.currentTimeMillis());
+		Timestamp t2 = new Timestamp (System.currentTimeMillis());
+		System.out.println(t1);
+		/*
+		GestoreTraffico gestore= new GestoreTraffico();
+		GestoreClient gc=new GestoreClient();
+		gestore.setGestoreClient(gc);
+		
+		gestore.nuovoDato("banano", Traffico.ELEVATO, t1, Mittente.CENTRALINASTRADALE);
+		
+		*/
+		
+		/*int minutiOld, minutiNew, oraOld, oraNew;
+		Calendar calendar=Calendar.getInstance();
+		Calendar calendar2=Calendar.getInstance();
+		calendar2.setTime(t1);
+		calendar2.set(Calendar.MINUTE, 30);
+		calendar2.set(Calendar.HOUR, 2);
+		oraOld=calendar2.get(Calendar.HOUR);
+		minutiOld=calendar2.get(Calendar.MINUTE);
+		calendar.setTime(t1);
+		calendar.set(Calendar.MINUTE, 40);
+		calendar.set(Calendar.HOUR, 2);
+		oraNew=calendar.get(Calendar.HOUR);
+		minutiNew=calendar.get(Calendar.MINUTE);
+		
+		System.out.println("New ora: "+oraOld + "  minuti: "+ minutiOld);
+		System.out.println("Old ora: "+oraNew + "  minuti: "+ minutiNew);
+
+		Calendar cOld=Calendar.getInstance();
+		Calendar cNew=Calendar.getInstance();
+		
+		cOld=calendar;
+		cNew=calendar2;
+		
+		// si confronta se la nuova data è >5 minuti rispetto la precedente
+		cNew.set(Calendar.MINUTE, cNew.get(Calendar.MINUTE)-5);
+		
+		if (cOld.compareTo(cNew)>=0){
+			System.out.println("modifico su db");
+		}
+		else {
+			System.out.println("non faccio nulla");
+		}*/
+		
+		/*
+		Calendar c= Calendar.getInstance();
+		c.setTime(t1);
+		Calendar c2=c;
+		c.set(Calendar.MINUTE, 5);
+		System.out.println ("data normale: "+c.get(Calendar.MINUTE));
+		System.out.println ("data elaborata"+c2.get(Calendar.MINUTE));
+		*/
+		
+		
+		
+		/*
+		GestoreNotifiche gn= new GestoreNotifiche();
+		ArrayList<String> lista=new ArrayList<String>();
+		
+		gn.addSegmento("a", 40, null);
+		lista.clear();
+		lista.add("a");
+		gn.addSegmento("b", 81, lista);
+		lista.clear();
+		lista.add("b");
+		gn.addSegmento("c", 17, lista);
+		lista.clear();
+		lista.add("a");
+		lista.add("b");
+		gn.addSegmento("d", 100, lista);
+		lista.clear();
+		lista.add("d");
+		gn.addSegmento("e", 10, lista);
+		lista.clear();
+		lista.add("e");
+		lista.add("c");
+		gn.addSegmento("f", 3, lista);
+		lista.clear();
+		lista.add("e");
+		lista.add("f");
+		lista.add("a");
+		gn.addSegmento("g", 69, lista);
+		
+		Calendar cOld=Calendar.getInstance();
+		Calendar cNew=Calendar.getInstance();
+		cOld.setTime(t1);
+		cNew=cOld;
+		cNew.set(Calendar.MINUTE, 5);
+		cOld.set(Calendar.MINUTE, 10);
+		System.out.println(cNew.get(Calendar.MINUTE));
+		*/
+		
+		/*
+		t1.setNanos(1);
+		t2.setNanos(100000001);
+		
+		long i1=t1.getTime();
+		long i2=t2.getTime();
+		float t=i2-i1;
+		float tot=4500/t;
+		
+		System.out.println("tempo(secondi): "+t/1000+ " - velocità(m/s): " + tot);
+		System.out.println(tot);
+		*/
+		
+		//CentralinaTask cc=new CentralinaTask();
+		
+		//GestoreTraffico banano=new GestoreTraffico();
+		
+		
+		
+		// IMPOSTAZIONE SERVER
+		
+		GestoreNotifiche gn=new GestoreNotifiche();
+		ArrayList<String> tmp=new ArrayList<String>();
+		gn.rilevaVieDintorni("03 Via Amoretti", 100, tmp);
+		for (int i=0; i<tmp.size(); i++) {
+			System.out.println(tmp.get(i));
+		}
+		
+		Registry registry = null;
+		try {
+			registry = LocateRegistry.createRegistry(12345);
+			registry.rebind("GestoreTraffico", new GestoreTraffico());
+			registry = LocateRegistry.createRegistry(12346);
+			registry.rebind("GestoreNotifiche", gn);
+			System.out.println("Server online");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+		
+		while(true)
+		{
+			
+		}
+		
+		/*
+		   FileReader f=null;
+		    try {
+				f=new FileReader("./src/MainPackage/associazioni.txt");
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+
+		    BufferedReader b;
+		    b=new BufferedReader(f);
+
+		    String s=null;
+
+
+		    while(true) {
+		        try {
+					s=b.readLine();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		        if(s==null)
+		        	break;
+		        System.out.println(s);
+		      }
+		      */
+	}
+}
+

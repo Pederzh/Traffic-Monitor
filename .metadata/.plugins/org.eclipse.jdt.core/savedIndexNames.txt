@@ -1,0 +1,21 @@
+INDEX VERSION 1.131+/Users/pederzh/dev/progetto/traffic-monitor/java/.metadata/.plugins/org.eclipse.jdt.core
+3907871794.index
+783879761.index
+293963335.index
+2142079840.index
+2591217081.index
+3453534767.index
+2968096718.index
+3171402099.index
+913406503.index
+1152624661.index
+162405319.index
+214378579.index
+1612092521.index
+3579423168.index
+3803059791.index
+3897180364.index
+2062515352.index
+2048152730.index
+524126782.index
+2259773393.index

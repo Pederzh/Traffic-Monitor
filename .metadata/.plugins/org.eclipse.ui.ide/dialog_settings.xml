@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="/Users/pederzh/dev/progetto/traffic-monitor/java"/>
+		<item value="/Users/francescofiori/Desktop/Progetto/traffic-monitor/java/Applicazione"/>
+		<item value="/Users/francescofiori/Desktop/Progetto/traffic-monitor/java/Centralina"/>
+		<item value="/Users/francescofiori/Desktop/Progetto/traffic-monitor/java/SistemaCentrale"/>
+		<item value="/Users/francescofiori/eclipse-workspace/TrafficMonitor"/>
+		<item value="/Users/pederzh/dev/progetto/traffic-monitor/java/Applicazione"/>
+		<item value="/Users/francescofiori/Desktop/Progetto/traffic-monitor/java/traffic-monitor"/>
+		<item value="/Users/pederzh/dev/progetto/traffic-monitor/java/traffic-monitor"/>
+		<item value="D:\Dev\Progetto Laurea\traffic-monitor\java\traffic-monitor"/>
+		<item value="/Users/francescofiori/eclipse-workspace/src"/>
+		<item value="/Users/francescofiori/Desktop/Progetto/traffic-monitor/java/TrafficMonitor"/>
+	</list>
+	<section name="CleanDialogSettings">
+		<item value="484" key="DIALOG_WIDTH"/>
+		<item value="true" key="TOGGLE_SELECTED"/>
+		<item value="377" key="DIALOG_HEIGHT"/>
+		<item value="598" key="DIALOG_X_ORIGIN"/>
+		<item value="245" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="ExternalProjectImportWizard">
+	</section>
+</section>

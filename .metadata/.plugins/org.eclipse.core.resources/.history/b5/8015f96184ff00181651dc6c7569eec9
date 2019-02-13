@@ -1,0 +1,16 @@
+package Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+import AppUtente.ApplicazioneDataManager;
+
+class setUltimaPosizioneTest {
+
+	@Test
+	public void testSetUltimaPosizioneTest() {
+		ApplicazioneDataManager tester = new ApplicazioneDataManager();
+	}
+
+}

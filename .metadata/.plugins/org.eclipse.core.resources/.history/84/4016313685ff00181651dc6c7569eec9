@@ -1,0 +1,73 @@
+package MainPackage;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
+
+import AppSistema.Notifica;
+
+public class panelNotifica extends JPanel {
+
+	private JLabel lblVarNotificaStatoTraffico;
+	private JLabel lblVarNotificaVia;
+	private JButton btnChiudiNotifica;
+	/**
+	 * Create the panel.
+	 */
+	public panelNotifica() {
+		Color grigio = Color.decode("#2A282D");
+		Color grigioHeader = Color.decode("#323136");
+		Color rosso = Color.decode("#DB514C");
+		
+		this.setBounds(0, 0, 367, 75);  //da cambiare per la sovrapposizione
+		//panelPaginaPrincipale.add(panelNotifica);
+		this.setBorder(new LineBorder(rosso, 5));
+		this.setLayout(null);
+		this.setBackground(new Color(47, 44, 49));
+		
+		btnChiudiNotifica = new JButton("x");
+		btnChiudiNotifica.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
+		btnChiudiNotifica.setBounds(341, 7, 16, 16);
+		this.add(btnChiudiNotifica);
+		
+		lblVarNotificaStatoTraffico = new JLabel("Traffico: ELEVATO");
+		lblVarNotificaStatoTraffico.setForeground(Color.WHITE);
+		lblVarNotificaStatoTraffico.setBounds(9, 34, 149, 35);
+		this.add(lblVarNotificaStatoTraffico);
+		
+		lblVarNotificaVia = new JLabel("In: Via Andrea Castelli");
+		lblVarNotificaVia.setForeground(Color.WHITE);
+		lblVarNotificaVia.setBounds(154, 34, 170, 35);
+		this.add(lblVarNotificaVia);
+		
+		JLabel lblNotifica = new JLabel("Notifica");
+		lblNotifica.setForeground(Color.WHITE);
+		lblNotifica.setFont(new Font(".SF NS Text", Font.BOLD, 20));
+		lblNotifica.setBounds(9, 6, 201, 32);
+		this.add(lblNotifica);
+	}
+	
+	public void setNotifica(Notifica n) {
+		this.lblVarNotificaStatoTraffico.setText("Traffico: " + n.getTesto());
+		this.lblVarNotificaVia.setText("In: " + n.getPosizione().substring(3)); //substring 3 perché i primi 3 caratteri della via contengono il segmento stradale (utilizzato per il calcolo delle vie adiacenti)
+	}
+	
+	public JLabel getStatoTraffico() {
+		return this.lblVarNotificaStatoTraffico;
+	}
+	
+	public JLabel getVia() {
+		return this.lblVarNotificaVia;
+	}
+	
+	public JButton getChiudi() {
+		return this.btnChiudiNotifica;
+	}
+
+}
